@@ -24,19 +24,28 @@ const updateServiceEmployee = async (
   name: string,
   salary: string
 ) => {
-  const [result] = await pool.query(
+  const response = await pool.query(
     "UPDATE employee  SET  name = ?, salary = ? WHERE id = ? ",
     [name, salary, id]
   );
+  const result = JSON.stringify(response);
+  const rows = JSON.parse(result);
+  const [dataUpdate] = await pool.query(
+    "SELECT * FROM employee WHERE id = ? ",
+    [id]
+  );
+  const data = {
+    dataUpdate,
+    rows,
+  };
 
-  console.log(result);
-
-  const [rows] = await pool.query("SELECT * FROM employee WHERE id = ? ", [id]);
-  return rows;
+  return data;
 };
 
 const deleteServiceEmployee = async (id: string) => {
-  const [rows] = await pool.query("DELETE FROM employee WHERE id = ?", [id]);
+  const response = await pool.query("DELETE FROM employee WHERE id = ?", [id]);
+  const result = JSON.stringify(response);
+  const rows = JSON.parse(result);
   return rows;
 };
 

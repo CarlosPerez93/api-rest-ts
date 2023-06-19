@@ -33,10 +33,11 @@ const getEmployee = async ({ params }: Request, res: Response) => {
 const deleteEmployee = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params;
-    const rows = await deleteServiceEmployee(id);
-    console.log(rows);
+    const [rows] = await deleteServiceEmployee(id);
+    console.log(rows.affectedRows);
 
-    // if (rows.affectedRows <= 0) return res.status(404).send({ message: "EMPLOYEE_NOT_FOUND" });
+    if (rows.affectedRows <= 0)
+      return res.status(404).send({ message: "EMPLOYEE_NOT_FOUND" });
     return res.sendStatus(204);
   } catch (e) {
     res.status(500).send(handleHttp(res, "ERROR_DELETED_EMPLOYEES"));
@@ -57,9 +58,13 @@ const updateEmployee = async ({ params, body }: Request, res: Response) => {
   try {
     const { id } = params;
     const { name, salary } = body;
-    const rows = await updateServiceEmployee(id, name, salary);
+    const data = await updateServiceEmployee(id, name, salary);
+    const { rows, dataUpdate } = data;
 
-    res.send(rows);
+    if (rows.affectedRows === 0)
+      return res.status(404).json({ message: "EMPLOYEE_NOT_FOUND" });
+
+    res.send(dataUpdate);
   } catch (e) {
     res.status(500).send(handleHttp(res, "ERROR_GET_EMPLOYEES"));
   }
