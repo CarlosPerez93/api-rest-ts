@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getFile } from "../controller/upload";
+import { getFile } from "../api/upload/upload";
 import multerMiddleware from "../middleware/file";
 import { checkJWT } from "../middleware/session";
 

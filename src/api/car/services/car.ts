@@ -1,5 +1,5 @@
 import { Car } from "../interface/car.interface";
-import ItemModel from "../models/items";
+import ItemModel from "../model/car";
 
 const postCars = async (item: Car) => {
   const response = await ItemModel.create(item);

@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { handleHttp } from "../utils/error.handle";
-import { registerUpload } from "../services/storage";
-import { RequestExt } from "../interface/req-ext";
-import { Storage } from "../interface/storage";
+import { handleHttp } from "../../utils/error.handle";
+import { registerUpload } from "../../services/storage";
+import { RequestExt } from "../../interfaceGlobal/req-ext";
+import { Storage } from "../../interfaceGlobal/storage";
 
 const getFile = async (req: RequestExt, res: Response) => {
   try {

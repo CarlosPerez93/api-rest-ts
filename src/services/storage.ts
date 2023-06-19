@@ -1,4 +1,6 @@
-import { Storage } from "../interface/storage";
+import { Request, Response } from "express";
+import { Storage } from "../interfaceGlobal/storage";
+import UserModel from "../api/user/model/user";
 import StorageModel from "../models/storage";
 
 const registerUpload = async ({ fileName, idUser, path }: Storage) => {
@@ -6,4 +8,11 @@ const registerUpload = async ({ fileName, idUser, path }: Storage) => {
   return response;
 };
 
-export { registerUpload };
+const getImgUser = async () => {
+  const response = await StorageModel.find({
+    idUser: "car1@gmail.com",
+  });
+  return response;
+};
+
+export { registerUpload, getImgUser };

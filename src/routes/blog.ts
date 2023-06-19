@@ -5,7 +5,7 @@ import {
   getBlogs,
   postBlogs,
   updateBlogs,
-} from "../controller/blog";
+} from "../api/blog/controller/blog";
 
 const router = Router();
 

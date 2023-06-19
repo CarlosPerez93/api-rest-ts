@@ -1,7 +1,7 @@
 import { Response } from "express";
-import { handleHttp } from "../utils/error.handle";
+import { handleHttp } from "../../../utils/error.handle";
 import { getOrders } from "../services/order";
-import { RequestExt } from "../interface/req-ext";
+import { RequestExt } from "../../../interfaceGlobal/req-ext";
 
 const getOrder = async (req: RequestExt, res: Response) => {
   try {

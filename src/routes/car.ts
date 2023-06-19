@@ -5,7 +5,7 @@ import {
   getItems,
   postItems,
   updateItems,
-} from "../controller/item";
+} from "../api/car/controller/car";
 import { logMiddleware } from "../middleware/log";
 
 const router = Router();
