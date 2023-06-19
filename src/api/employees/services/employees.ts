@@ -2,26 +2,43 @@ import { pool } from "../../../config/mysql";
 import { EMPLOYEE } from "../interface/employee";
 
 const getServiceEmployees = async () => {
-  const response = await pool.query("SELECT * from employee");
-  return response;
+  const [rows] = await pool.query("SELECT * FROM employee");
+  return rows;
 };
 const getServiceEmployee = async (id: string) => {
-  const response = await pool.query(`Select * from employee where id=?`, [id]);
-  return response;
+  const [rows] = await pool.query(`SELECT * FROM employee WHERE id=?`, [id]);
+  return rows;
 };
 
 const postServiceEmployee = async (item: EMPLOYEE) => {
   const { name, salary } = item;
-  const [response] = await pool.query(
+  const [rows] = await pool.query(
     "INSERT INTO employee (name, salary) VALUES(?,?)",
     [name, salary]
   );
-  return { response };
+  return rows;
 };
 
-const updateServiceEmployee = async (id: string) => {};
+const updateServiceEmployee = async (
+  id: string,
+  name: string,
+  salary: string
+) => {
+  const [result] = await pool.query(
+    "UPDATE employee  SET  name = ?, salary = ? WHERE id = ? ",
+    [name, salary, id]
+  );
 
-const deleteServiceEmployee = async (id: string) => {};
+  console.log(result);
+
+  const [rows] = await pool.query("SELECT * FROM employee WHERE id = ? ", [id]);
+  return rows;
+};
+
+const deleteServiceEmployee = async (id: string) => {
+  const [rows] = await pool.query("DELETE FROM employee WHERE id = ?", [id]);
+  return rows;
+};
 
 export {
   updateServiceEmployee,

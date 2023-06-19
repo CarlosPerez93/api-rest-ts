@@ -12,7 +12,7 @@ const getEmployees = async (req: Request, res: Response) => {
   try {
     const response = await getServiceEmployees();
     if (response !== null) {
-      res.send({ message: "SUCCESSFUL_TRANSACTION", data: response[0] });
+      res.send({ message: "SUCCESSFUL_TRANSACTION", data: response });
     }
   } catch (e) {
     res.status(500).send(handleHttp(res, "ERROR_GET_EMPLOYEES"));
@@ -21,12 +21,25 @@ const getEmployees = async (req: Request, res: Response) => {
 const getEmployee = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params;
-    const response = await getServiceEmployee(id);
-    if (response.length <= 0)
+    const rows = await getServiceEmployee(id);
+    if (Array.isArray(rows) && rows.length <= 0)
       return res.status(404).send({ message: "NOT_FOUNT_EMPLOYEE" });
-    res.send(response[0]);
+
+    res.send(rows);
   } catch (e) {
     res.status(500).send(handleHttp(res, "ERROR_GET_EMPLOYEES"));
+  }
+};
+const deleteEmployee = async ({ params }: Request, res: Response) => {
+  try {
+    const { id } = params;
+    const rows = await deleteServiceEmployee(id);
+    console.log(rows);
+
+    // if (rows.affectedRows <= 0) return res.status(404).send({ message: "EMPLOYEE_NOT_FOUND" });
+    return res.sendStatus(204);
+  } catch (e) {
+    res.status(500).send(handleHttp(res, "ERROR_DELETED_EMPLOYEES"));
   }
 };
 const postEmployee = async ({ body }: Request, res: Response) => {
@@ -40,20 +53,13 @@ const postEmployee = async ({ body }: Request, res: Response) => {
   }
 };
 
-const updateEmployee = async ({ params }: Request, res: Response) => {
+const updateEmployee = async ({ params, body }: Request, res: Response) => {
   try {
     const { id } = params;
-    const response = await updateServiceEmployee(id);
-    res.send(response);
-  } catch (e) {
-    res.status(500).send(handleHttp(res, "ERROR_GET_EMPLOYEES"));
-  }
-};
-const deleteEmployee = async ({ params }: Request, res: Response) => {
-  try {
-    const { id } = params;
-    const response = await deleteServiceEmployee(id);
-    res.send(response);
+    const { name, salary } = body;
+    const rows = await updateServiceEmployee(id, name, salary);
+
+    res.send(rows);
   } catch (e) {
     res.status(500).send(handleHttp(res, "ERROR_GET_EMPLOYEES"));
   }
