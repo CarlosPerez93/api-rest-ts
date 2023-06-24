@@ -7,6 +7,7 @@ const registerCtrl = async ({ body }: Request, res: Response) => {
   const response = await registerNewUser(body);
   res.send(response);
 };
+
 const loginCtrl = async ({ body }: Request, res: Response) => {
   const response = await loginUser(body);
 

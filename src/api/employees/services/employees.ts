@@ -1,21 +1,21 @@
 import { pool } from "../../../config/mysql";
 import { EMPLOYEE } from "../interface/employee";
 
-const getServiceEmployees = async () => {
-  const [rows] = await pool.query("SELECT * FROM employee");
-  return rows;
-};
-const getServiceEmployee = async (id: string) => {
-  const [rows] = await pool.query(`SELECT * FROM employee WHERE id=?`, [id]);
-  return rows;
-};
-
 const postServiceEmployee = async (item: EMPLOYEE) => {
   const { name, salary } = item;
   const [rows] = await pool.query(
     "INSERT INTO employee (name, salary) VALUES(?,?)",
     [name, salary]
   );
+  return rows;
+};
+
+const getServiceEmployees = async () => {
+  const [rows] = await pool.query("SELECT * FROM employee");
+  return rows;
+};
+const getServiceEmployee = async (id: string) => {
+  const [rows] = await pool.query(`SELECT * FROM employee WHERE id=?`, [id]);
   return rows;
 };
 

@@ -18,6 +18,7 @@ const getEmployees = async (req: Request, res: Response) => {
     res.status(500).send(handleHttp(res, "ERROR_GET_EMPLOYEES"));
   }
 };
+
 const getEmployee = async ({ params }: Request, res: Response) => {
   try {
     const { id } = params;
@@ -43,6 +44,7 @@ const deleteEmployee = async ({ params }: Request, res: Response) => {
     res.status(500).send(handleHttp(res, "ERROR_DELETED_EMPLOYEES"));
   }
 };
+
 const postEmployee = async ({ body }: Request, res: Response) => {
   try {
     const response = await postServiceEmployee(body);
